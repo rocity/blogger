@@ -4,5 +4,5 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 
-def home(request):
-    return render(request, 'blog/home.html', {})
+def index(request):
+    return render(request, 'blog/index.html', {})
