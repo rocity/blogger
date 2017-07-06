@@ -22,3 +22,7 @@ def post(request, post_id):
         'post': post
     }
     return render(request, 'blog/post.html', context)
+
+
+def dashboard(request):
+    return render(request, 'blog/dashboard.html')
