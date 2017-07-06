@@ -18,9 +18,14 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 
+from users.views import login, logout
+
+
 urlpatterns = [
+    url(r'^login/$', login, name='login'),
+    url(r'^logout/$', logout, name='logout'),
+
     url(r'^', include('blog.urls')),
-    url(r'^users/', include('users.urls')),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
