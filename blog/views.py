@@ -26,7 +26,6 @@ def post(request, post_id):
 
 
 def dashboard(request):
-
     user = request.user
 
     published_posts_count = Post.objects.filter(author=user, status=Post.PUBLISHED).count()
@@ -40,3 +39,14 @@ def dashboard(request):
     }
 
     return render(request, 'blog/dashboard.html', context)
+
+def dashboard_my_posts(request):
+    user = request.user
+
+    # All posts (unfiltered)
+    user_posts = Post.objects.filter(author=user)
+
+    context = {
+        'posts': user_posts
+    }
+    return render(request, 'blog/dashboard_my_posts.html', context)

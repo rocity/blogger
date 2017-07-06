@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^post/(?P<post_id>\d+)$', views.post, name='post'),
 
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
+    url(r'^dashboard/posts/', views.dashboard_my_posts, name='dashboard_my_posts'),
 ]
