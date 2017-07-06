@@ -5,18 +5,34 @@
         <div class="container">
             <div class="col-md-6">
                 <form novalidate method="POST">
-                    <p class="text-danger">
-                        {{ login_form.non_field_errors }}
-                        {{ login_form.username.errors }}
-                        {{ login_form.password.errors }}
-                    </p>
+                    {% if login_form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in login_form.non_field_errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ login_form.username.id_for_label }}">Username</label>
+                        {% if login_form.username.errors %}
+                            {% for error in login_form.username.errors %}
+                                <p class="text-danger">
+                                    {{ error|escape }}
+                                </p>
+                            {% endfor %}
+                        {% endif %}
                         {{ login_form.username }}
                     </div>
                     <div class="form-group">
                         <label for="{{ login_form.password.id_for_label }}">Password</label>
+                        {% if login_form.password.errors %}
+                            {% for error in login_form.password.errors %}
+                                <p class="text-danger">
+                                    {{ error|escape }}
+                                </p>
+                            {% endfor %}
+                        {% endif %}
                         {{ login_form.password }}
                     </div>
                     <div class="form-group">
