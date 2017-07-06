@@ -12,16 +12,22 @@
       <h1>My Posts</h1>
       <div class="row">
         <div class="col-md-12">
-            {% for post in posts %}
-                <div class="well post-card">
-                  <h2>{{ post.heading }}</h2>
-                  <small>By: {{ post.author }}</small>
-                  <p>
-                      <span class="label label-default">{{ post.get_status_display }}</span>
-                  </p>
-                  <p>{{ post.body|truncatewords:10 }}</p>
-                </div>
-            {% endfor %}
+            {% if posts %}
+              {% for post in posts %}
+                  <div class="well post-card">
+                    <h2>{{ post.heading }}</h2>
+                    <small>By: {{ post.author }}</small>
+                    <p>
+                        <span class="label label-default">{{ post.get_status_display }}</span>
+                    </p>
+                    <p>{{ post.body|truncatewords:10 }}</p>
+                  </div>
+              {% endfor %}
+            {% else %}
+              <div class="alert alert-warning">
+                <p>There are no posts.</p>
+              </div>
+            {% endif %}
         </div>
       </div>
     </div>

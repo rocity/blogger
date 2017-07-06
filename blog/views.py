@@ -40,11 +40,21 @@ def dashboard(request):
 
     return render(request, 'blog/dashboard.html', context)
 
-def dashboard_my_posts(request):
+def dashboard_my_posts(request, post_status=None):
     user = request.user
 
+    qs_filter = {
+        'author': user
+    }
+
+    if post_status is not None:
+        qs_filter = {
+            'author': user,
+            'status': post_status
+        }
+
     # All posts (unfiltered)
-    user_posts = Post.objects.filter(author=user)
+    user_posts = Post.objects.filter(**qs_filter)
 
     context = {
         'posts': user_posts
