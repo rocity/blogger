@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from blog.models import Post
 
 
+
 def index(request):
     posts = Post.objects.all()
 
@@ -25,4 +26,17 @@ def post(request, post_id):
 
 
 def dashboard(request):
-    return render(request, 'blog/dashboard.html')
+
+    user = request.user
+
+    published_posts_count = Post.objects.filter(author=user, status=Post.PUBLISHED).count()
+    draft_posts_count = Post.objects.filter(author=user, status=Post.DRAFT).count()
+    archived_posts_count = Post.objects.filter(author=user, status=Post.ARCHIVED).count()
+
+    context = {
+        'published_posts_count': published_posts_count,
+        'draft_posts_count': draft_posts_count,
+        'archived_posts_count': archived_posts_count
+    }
+
+    return render(request, 'blog/dashboard.html', context)

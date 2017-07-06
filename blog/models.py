@@ -5,13 +5,23 @@ from django.conf import settings
 from django.db import models
 
 
-# Create your models here.
 class Post(models.Model):
+    PUBLISHED = 1
+    DRAFT = 2
+    ARCHIVED = 3
+
+    STATUSES = (
+        (PUBLISHED, 'Published'),
+        (DRAFT, 'Draft'),
+        (ARCHIVED, 'Archived'),
+    )
+
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='author')
     category = models.ManyToManyField('blog.Category')
     heading = models.CharField(max_length=50)
     body = models.TextField()
     cover = models.ImageField(upload_to='covers')
+    status = models.SmallIntegerField(choices=STATUSES, default=DRAFT)
 
     date_modified = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)
