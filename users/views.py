@@ -13,7 +13,7 @@ def login(request):
     login_form = LoginForm()
 
     if request.method == 'POST':
-        login_form = LoginForm(request.POST)
+        login_form = LoginForm(request.POST, request.FILES)
         if login_form.is_valid():
             user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
             if user is not None:

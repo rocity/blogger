@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^dashboard/posts/(?P<post_status>\d+)', views.dashboard_my_posts, name='dashboard_my_posts_filtered'),
     url(r'^dashboard/posts/', views.dashboard_my_posts, name='dashboard_my_posts'),
+    url(r'^dashboard/post/create/', views.dashboard_create_post, name='dashboard_create_post'),
 ]

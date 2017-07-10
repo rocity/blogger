@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-4 ">
+      <h1>Dashboard</h1>
+      {% include 'includes/blog/dashboard_sidebar.html' %}
+    </div>
+    <div class="col-md-8">
+      <h1>Create Post</h1>
+      {% if success and post_id %}
+        <div class="alert alert-success">
+          Post has been created! View it <a href="{% url 'blog:post' post_id %}">here</a>!
+        </div>
+      {% endif %}
+      <form method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    <p class="text-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="{{ form.heading.id_for_label }}">Heading</label>
+            {% if form.heading.errors %}
+                {% for error in form.heading.errors %}
+                    <p class="text-danger">
+                        {{ error|escape }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+            {{ form.heading }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.body.id_for_label }}">Body</label>
+            {% if form.body.errors %}
+                {% for error in form.body.errors %}
+                    <p class="text-danger">
+                        {{ error|escape }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+            {{ form.body }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.cover.id_for_label }}">Cover</label>
+            {% if form.cover.errors %}
+                {% for error in form.cover.errors %}
+                    <p class="text-danger">
+                        {{ error|escape }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+            {{ form.cover }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.status.id_for_label }}">Status</label>
+            {% if form.status.errors %}
+                {% for error in form.status.errors %}
+                    <p class="text-danger">
+                        {{ error|escape }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+            {{ form.status }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.category.id_for_label }}">Categories</label>
+            {% if form.category.errors %}
+                {% for error in form.category.errors %}
+                    <p class="text-danger">
+                        {{ error|escape }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+            {{ form.category }}
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">Create Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
