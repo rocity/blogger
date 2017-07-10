@@ -36,3 +36,6 @@ class Category(models.Model):
 
     def __str__(self):
         return "Category - {}".format(self.name)
+
+    def get_active_posts_with_category_count(self):
+        return Post.objects.filter(category=self.id).count()
