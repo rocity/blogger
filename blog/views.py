@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 
-from blog.models import Post
+from .models import Post
+from .forms import PostForm
 
 
 
@@ -60,3 +61,27 @@ def dashboard_my_posts(request, post_status=None):
         'posts': user_posts
     }
     return render(request, 'blog/dashboard_my_posts.html', context)
+
+def dashboard_create_post(request):
+    success = False
+    post_id = None
+    user = request.user
+    form = PostForm()
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.author = user
+            f.save()
+
+            success = True
+            post_id = f.id
+
+    context = {
+        'form': form,
+        'success': success,
+        'post_id': post_id
+    }
+
+    return render(request, 'blog/dashboard_create_post.html', context)
