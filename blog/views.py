@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 
-from .models import Post
+from .models import Post, Category
 from .forms import PostForm
 
 
@@ -85,3 +85,11 @@ def dashboard_create_post(request):
     }
 
     return render(request, 'blog/dashboard_create_post.html', context)
+
+def categories(request):
+    categories = Category.objects.all()
+
+    context = {
+        'categories': categories
+    }
+    return render(request, 'blog/category_list.html', context)
