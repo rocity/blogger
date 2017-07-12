@@ -9,7 +9,7 @@
           {% if posts %}
             {% for post in posts %}
               <div class="well post-card">
-                <h2>{{ post.heading }}</h2>
+                <h2><a href="{% url 'blog:post' post.id %}">{{ post.heading }}</a></h2>
                 <small>By: {{ post.author }}</small>
                 <p>
                     <span class="label label-default">{{ post.get_status_display }}</span>
