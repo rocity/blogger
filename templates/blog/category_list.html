@@ -4,21 +4,17 @@
   <div class="row">
     <div class="container">
       <h1>Categories</h1>
-      <div class="row">
-        <div class="col-md-2">
-          <h2>Category Name</h2>
-        </div>
-        <div class="col-md-10">
-          <h3>Number of Posts</h3>
-        </div>
-      </div>
       {% for category in categories %}
-        <div class="row">
-          <div class="col-md-2">
-            <h2>{{ category.name }}</h2>
-          </div>
-          <div class="col-md-10">
-            <h3>{{ category.get_active_posts_with_category_count }}</h3>
+        <div class="well card">
+          <div class="row">
+            <div class="col-md-8">
+              <h2><a href="{% url 'blog:category' category.name %}">{{ category.name }}</a></h2>
+            </div>
+            <div class="col-md-4">
+              <h3>
+                {{ category.get_active_posts_with_category_count }}
+                &nbsp;<small>post{{ category.get_active_posts_with_category_count|pluralize }}</small></h3>
+            </div>
           </div>
         </div>
       {% endfor %}
