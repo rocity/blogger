@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^post/(?P<post_id>\d+)$', views.post, name='post'),
 
     url(r'^categories/$', views.categories, name='categories'),
+    url(r'^category/(?P<category>\w+)', views.category, name='category'),
 
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^dashboard/posts/(?P<post_status>\d+)', views.dashboard_my_posts, name='dashboard_my_posts_filtered'),
