@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Post, Category
 from .forms import PostForm, CommentForm
@@ -22,9 +22,11 @@ def post(request, post_id):
     comment_form = CommentForm()
 
     if request.method == 'POST':
-        comment_form = CommentForm(request.data)
+        comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            comment_form.save()
+            comment_obj = comment_form.save()
+            post_obj.comments.add(comment_obj)
+            return redirect('blog:post', post_id=post_id)
 
     context = {
         'post': post_obj,
@@ -108,7 +110,7 @@ def categories(request):
 
 def category(request, category_name):
     category_obj = get_object_or_404(Category, name__iexact=category_name)
-    posts = Post.objects.filter(category=category)
+    posts = Post.objects.filter(category=category_obj)
 
     context = {
         'category': category_obj,

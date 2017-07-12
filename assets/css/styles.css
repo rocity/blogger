@@ -19,3 +19,11 @@
     font-size: 72px;
     display: block;
 }
+
+.comment-wrap {
+    background-color: #fefff;
+}
+
+.comment-avatar {
+    max-height: 50px;
+}

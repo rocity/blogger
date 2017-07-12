@@ -20,6 +20,8 @@ from django.contrib import admin
 
 from users.views import login, logout
 
+import django_pydenticon.urls
+
 
 urlpatterns = [
     url(r'^login/$', login, name='login'),
@@ -27,6 +29,7 @@ urlpatterns = [
 
     url(r'^', include('blog.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^identicon/', include(django_pydenticon.urls.get_patterns())),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

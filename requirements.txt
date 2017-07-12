@@ -2,6 +2,7 @@ astroid==1.5.3
 backports.functools-lru-cache==1.4
 configparser==3.5.0
 Django==1.11.3
+django-pydenticon==0.2
 dodgy==0.1.9
 enum34==1.1.6
 isort==4.2.15
@@ -12,6 +13,7 @@ pep8-naming==0.4.1
 Pillow==4.2.0
 prospector==0.12.7
 pycodestyle==2.0.0
+pydenticon==0.3
 pydocstyle==2.0.0
 pyflakes==1.5.0
 pylint==1.7.2
