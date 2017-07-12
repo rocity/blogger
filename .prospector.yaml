@@ -9,6 +9,10 @@ ignore-paths:
   - docs
   - requirements
 
+ignore-patterns:
+  - manage.py
+  - settings.py
+
 uses:
     - django
 
@@ -41,5 +45,6 @@ pylint:
     - attribute-defined-outside-init
     - redefined-builtin
     - too-many-ancestors
+    - model-missing-unicode
   options:
     max-line-length: 100

@@ -7,7 +7,6 @@ from .models import Post, Category
 from .forms import PostForm
 
 
-
 def index(request):
     posts = Post.objects.all()
 
@@ -18,10 +17,10 @@ def index(request):
 
 
 def post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+    post_obj = get_object_or_404(Post, id=post_id)
 
     context = {
-        'post': post
+        'post': post_obj
     }
     return render(request, 'blog/post.html', context)
 
@@ -40,6 +39,7 @@ def dashboard(request):
     }
 
     return render(request, 'blog/dashboard.html', context)
+
 
 def dashboard_my_posts(request, post_status=None):
     user = request.user
@@ -61,6 +61,7 @@ def dashboard_my_posts(request, post_status=None):
         'posts': user_posts
     }
     return render(request, 'blog/dashboard_my_posts.html', context)
+
 
 def dashboard_create_post(request):
     success = False
@@ -86,20 +87,22 @@ def dashboard_create_post(request):
 
     return render(request, 'blog/dashboard_create_post.html', context)
 
+
 def categories(request):
-    categories = Category.objects.all()
+    categories_list = Category.objects.all()
 
     context = {
-        'categories': categories
+        'categories': categories_list
     }
     return render(request, 'blog/category_list.html', context)
 
-def category(request, category):
-    category = get_object_or_404(Category, name__iexact=category)
+
+def category(request, category_name):
+    category_obj = get_object_or_404(Category, name__iexact=category_name)
     posts = Post.objects.filter(category=category)
 
     context = {
-        'category': category,
+        'category': category_obj,
         'posts': posts,
     }
 

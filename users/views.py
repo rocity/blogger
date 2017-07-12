@@ -15,7 +15,8 @@ def login(request):
     if request.method == 'POST':
         login_form = LoginForm(request.POST, request.FILES)
         if login_form.is_valid():
-            user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+            data = request.POST
+            user = authenticate(request, username=data['username'], password=data['password'])
             if user is not None:
                 auth_login(request, user)
                 return redirect('/')
