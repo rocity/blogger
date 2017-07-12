@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8">
+      <h1>Category: {{ category.name }}</h1>
+      <div class="row">
+        <div class="col-md-12">
+          {% if posts %}
+            {% for post in posts %}
+              <div class="well post-card">
+                <h2><a href="{% url 'blog:post' post.id %}">{{ post.heading }}</a></h2>
+                <small>By: {{ post.author }}</small>
+                <p>
+                    <span class="label label-default">{{ post.get_status_display }}</span>
+                </p>
+                <p>{{ post.body|truncatewords:10 }}</p>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
