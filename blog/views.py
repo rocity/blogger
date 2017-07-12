@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 
 from .models import Post, Category
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 
 def index(request):
@@ -18,9 +18,18 @@ def index(request):
 
 def post(request, post_id):
     post_obj = get_object_or_404(Post, id=post_id)
+    comments = post_obj.comments.all()
+    comment_form = CommentForm()
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.data)
+        if comment_form.is_valid():
+            comment_form.save()
 
     context = {
-        'post': post_obj
+        'post': post_obj,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request, 'blog/post.html', context)
 

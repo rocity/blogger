@@ -55,6 +55,7 @@ class Comment(models.Model):
 
     username = models.CharField(default='Anonymous', blank=True, max_length=50)
     body = models.TextField()
+    status = models.SmallIntegerField(choices=STATUSES, default=HIDDEN)
 
     date_modified = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)
