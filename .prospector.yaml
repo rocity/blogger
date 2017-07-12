@@ -1,0 +1,45 @@
+inherits:
+  - strictness_veryhigh
+  - full_pep8
+
+ignore-paths:
+  - node_modules
+  - bin
+  - config
+  - docs
+  - requirements
+
+uses:
+    - django
+
+pep8:
+  disable:
+    - E402
+  options:
+    max-line-length: 100
+
+pyflakes:
+  disable:
+    - F401
+    - F999
+    - F403
+
+pylint:
+  disable:
+    - wildcard-import
+    - relative-import
+    - invalid-name
+    - unused-wildcard-import
+    - wrong-import-position
+    - too-few-public-methods
+    - old-style-class
+    - no-init
+    - no-self-use
+    - unused-argument
+    - too-many-arguments
+    - too-many-instance-attributes
+    - attribute-defined-outside-init
+    - redefined-builtin
+    - too-many-ancestors
+  options:
+    max-line-length: 100
