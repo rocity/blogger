@@ -93,3 +93,14 @@ def categories(request):
         'categories': categories
     }
     return render(request, 'blog/category_list.html', context)
+
+def category(request, category):
+    category = get_object_or_404(Category, name__iexact=category)
+    posts = Post.objects.filter(category=category)
+
+    context = {
+        'category': category,
+        'posts': posts,
+    }
+
+    return render(request, 'blog/posts_by_category.html', context)
