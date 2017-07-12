@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Post, Category
-from .forms import PostForm
-
+from .forms import PostForm, CommentForm
 
 
 def index(request):
@@ -18,10 +17,21 @@ def index(request):
 
 
 def post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+    post_obj = get_object_or_404(Post, id=post_id)
+    comments = post_obj.comments.all()
+    comment_form = CommentForm()
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment_obj = comment_form.save()
+            post_obj.comments.add(comment_obj)
+            return redirect('blog:post', post_id=post_id)
 
     context = {
-        'post': post
+        'post': post_obj,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request, 'blog/post.html', context)
 
@@ -40,6 +50,7 @@ def dashboard(request):
     }
 
     return render(request, 'blog/dashboard.html', context)
+
 
 def dashboard_my_posts(request, post_status=None):
     user = request.user
@@ -61,6 +72,7 @@ def dashboard_my_posts(request, post_status=None):
         'posts': user_posts
     }
     return render(request, 'blog/dashboard_my_posts.html', context)
+
 
 def dashboard_create_post(request):
     success = False
@@ -86,20 +98,22 @@ def dashboard_create_post(request):
 
     return render(request, 'blog/dashboard_create_post.html', context)
 
+
 def categories(request):
-    categories = Category.objects.all()
+    categories_list = Category.objects.all()
 
     context = {
-        'categories': categories
+        'categories': categories_list
     }
     return render(request, 'blog/category_list.html', context)
 
-def category(request, category):
-    category = get_object_or_404(Category, name__iexact=category)
-    posts = Post.objects.filter(category=category)
+
+def category(request, category_name):
+    category_obj = get_object_or_404(Category, name__iexact=category_name)
+    posts = Post.objects.filter(category=category_obj)
 
     context = {
-        'category': category,
+        'category': category_obj,
         'posts': posts,
     }
 

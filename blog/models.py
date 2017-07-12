@@ -22,6 +22,7 @@ class Post(models.Model):
     body = models.TextField()
     cover = models.ImageField(upload_to='covers')
     status = models.SmallIntegerField(choices=STATUSES, default=DRAFT)
+    comments = models.ManyToManyField('blog.Comment')
 
     date_modified = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -39,3 +40,22 @@ class Category(models.Model):
 
     def get_active_posts_with_category_count(self):
         return Post.objects.filter(category=self.id).count()
+
+
+class Comment(models.Model):
+    HIDDEN = 1
+    VISIBLE = 2
+    DELETED = 3
+
+    STATUSES = (
+        (HIDDEN, 'Hidden'),
+        (VISIBLE, 'Visible'),
+        (DELETED, 'Deleted'),
+    )
+
+    username = models.CharField(default='Anonymous', blank=True, max_length=50)
+    body = models.TextField()
+    status = models.SmallIntegerField(choices=STATUSES, default=HIDDEN)
+
+    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True)
